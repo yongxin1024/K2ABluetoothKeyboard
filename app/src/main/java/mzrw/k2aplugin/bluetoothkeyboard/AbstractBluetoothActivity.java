@@ -1,5 +1,6 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * Abstract Activity to ensure bluetooth is activated.
  */
+@SuppressLint("MissingPermission")
 public abstract class AbstractBluetoothActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 17;
 

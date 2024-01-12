@@ -1,5 +1,6 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import mzrw.k2aplugin.bluetoothkeyboard.core.AuthorizedDevicesManager;
 import mzrw.k2aplugin.bluetoothkeyboard.core.HidService;
 import mzrw.k2aplugin.bluetoothkeyboard.layout.KeyboardLayoutFactory;
 
+@SuppressLint("MissingPermission")
 public class KeyboardActivity extends AbstractBluetoothActivity implements HidService.StateChangeListener {
     private static final String TAG = KeyboardActivity.class.getName();
     public static final String INTENT_EXTRA_STRING_TO_TYPE = "intent_extra_string_to_type";
@@ -133,7 +135,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     public void onStateChanged(int state) {
         switch (state) {
             case HidService.STATE_DISCONNECTED:
-                finishAndRemoveTask();
+//                finishAndRemoveTask();
+                // do nothing
                 break;
             case HidService.STATE_CONNECTING:
                 txtState.setText("Connecting");
