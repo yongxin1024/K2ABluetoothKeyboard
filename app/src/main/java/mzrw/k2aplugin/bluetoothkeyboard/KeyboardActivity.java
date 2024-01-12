@@ -31,11 +31,9 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
 
     private SharedPreferences selectedEntriesPreferences;
     private String selectedDevice;
-    private String selectedLayout;
     private List<BluetoothDevice> devices;
 
     private Spinner deviceSpinner;
-    private Spinner layoutSpinner;
     private Button btnConnect;
     private Button btnNoDevicesAuthorized;
     private TextView txtState;
@@ -49,7 +47,6 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         selectedEntriesPreferences = getPreferences(MODE_PRIVATE);
 
         deviceSpinner = findViewById(R.id.deviceSpinner);
-        layoutSpinner = findViewById(R.id.layoutSpinner);
         btnConnect = findViewById(R.id.btnConnect);
         btnNoDevicesAuthorized = findViewById(R.id.btnNoDevicesAuthorized);
         txtState = findViewById(R.id.txtState);
@@ -71,7 +68,6 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
 
         selectedEntriesPreferences.edit()
                 .putString(BUNDLE_KEY_SELECTED_DEVICE, selectedDevice)
-                .putString(BUNDLE_KEY_SELECTED_LAYOUT, selectedLayout)
                 .apply();
     }
 
@@ -80,15 +76,6 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedDevice = devices.get(position).getAddress();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-        layoutSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedLayout = (String) parent.getSelectedItem();
             }
 
             @Override
@@ -120,20 +107,13 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
                     .findAny()
                     .ifPresent(index -> deviceSpinner.setSelection(index));
         }
-
-        selectedLayout = selectedEntriesPreferences.getString(BUNDLE_KEY_SELECTED_LAYOUT, null);
-        final String[] layouts = getResources().getStringArray(R.array.layout_list);
-        IntStream.range(0, layouts.length)
-                .filter(index -> layouts[index].equals(selectedLayout))
-                .findAny()
-                .ifPresent(index -> layoutSpinner.setSelection(index));
     }
 
     public void connectToDevice(View v) {
         final BluetoothDevice device = bluetoothAdapter.getRemoteDevice(selectedDevice);
-        Log.i(TAG, "connecting to " + device.getName() + " using keyboard " + selectedLayout.getClass().getSimpleName());
+        Log.i(TAG, "connecting to " + device.getName());
         try {
-            hidService.connect(device, KeyboardLayoutFactory.getLayout(selectedLayout));
+            hidService.connect(device, KeyboardLayoutFactory.getLayout("UK QWERTY"));
         } catch (Exception e) {
             Log.e(TAG, "failed to connect to "+device.getName());
         }

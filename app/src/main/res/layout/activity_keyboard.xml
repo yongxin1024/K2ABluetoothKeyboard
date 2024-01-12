@@ -26,19 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/keyboard_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="@string/keyboard_layout" />
-
-        <Spinner
-            android:id="@+id/layoutSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/layout_list" />
-
         <Button
             android:id="@+id/btnConnect"
             android:layout_width="match_parent"

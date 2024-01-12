@@ -21,7 +21,7 @@
 
     <!-- MAIN ACTIVITY -->
     <string name="title_activity_main">K2A Bluetooth Keyboard</string>
-    <string name="send_test_string">Send Test String</string>
+    <string name="send_test_string">Send Password</string>
     <string name="enable_plugin">Enable Plugin</string>
     <string name="toast_plugin_successfully_activated">Plugin successfully activated</string>
     <string name="plugin_state_enabled">Plugin is activated</string>
