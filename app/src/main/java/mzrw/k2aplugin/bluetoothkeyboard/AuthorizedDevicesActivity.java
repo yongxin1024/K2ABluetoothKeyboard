@@ -1,5 +1,6 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import mzrw.k2aplugin.bluetoothkeyboard.core.AuthorizedDevicesManager;
 
+@SuppressLint("MissingPermission")
 public class AuthorizedDevicesActivity extends AbstractBluetoothActivity {
     private AuthorizedDevicesManager authorizedDevicesManager;
     private RecyclerView recyclerViewAuthorizedDevices;
