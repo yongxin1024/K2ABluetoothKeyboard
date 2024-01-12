@@ -25,7 +25,9 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     private static final String TAG = KeyboardActivity.class.getName();
     public static final String INTENT_EXTRA_STRING_TO_TYPE = "intent_extra_string_to_type";
     public static final String BUNDLE_KEY_SELECTED_DEVICE = "bundle_key_selected_device";
-    public static final String BUNDLE_KEY_SELECTED_LAYOUT = "bundle_key_selected_layout";
+    public static final String ENTER_STRING = "\n";
+
+    public static String CURRENT_SNED_STRING = "";
 
     private HidService hidService;
 
@@ -34,7 +36,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     private List<BluetoothDevice> devices;
 
     private Spinner deviceSpinner;
-    private Button btnConnect;
+    private Button btnPassword;
+    private Button btnEnter;
     private Button btnNoDevicesAuthorized;
     private TextView txtState;
 
@@ -47,7 +50,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         selectedEntriesPreferences = getPreferences(MODE_PRIVATE);
 
         deviceSpinner = findViewById(R.id.deviceSpinner);
-        btnConnect = findViewById(R.id.btnConnect);
+        btnPassword = findViewById(R.id.btnPassword);
+        btnEnter = findViewById(R.id.btnEnter);
         btnNoDevicesAuthorized = findViewById(R.id.btnNoDevicesAuthorized);
         txtState = findViewById(R.id.txtState);
 
@@ -81,7 +85,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-        btnConnect.setOnClickListener(this::connectToDevice);
+        btnPassword.setOnClickListener(this::connectToDevice);
+        btnEnter.setOnClickListener(this::connectToDevice);
         btnNoDevicesAuthorized.setOnClickListener(v -> startActivity(new Intent(KeyboardActivity.this, AuthorizedDevicesActivity.class)));
         hidService.setOnStateChangeListener(this);
     }
@@ -100,7 +105,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     }
 
     private void updateSelectionFromPreferences() {
-        if(devices != null) {
+        if (devices != null) {
             selectedDevice = selectedEntriesPreferences.getString(BUNDLE_KEY_SELECTED_DEVICE, null);
             IntStream.range(0, devices.size())
                     .filter(index -> devices.get(index).getAddress().equals(selectedDevice))
@@ -110,13 +115,18 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     }
 
     public void connectToDevice(View v) {
+        setSendString(v.getId());
         final BluetoothDevice device = bluetoothAdapter.getRemoteDevice(selectedDevice);
         Log.i(TAG, "connecting to " + device.getName());
         try {
             hidService.connect(device, KeyboardLayoutFactory.getLayout("UK QWERTY"));
         } catch (Exception e) {
-            Log.e(TAG, "failed to connect to "+device.getName());
+            Log.e(TAG, "failed to connect to " + device.getName());
         }
+    }
+
+    private void setSendString(int btnId) {
+        CURRENT_SNED_STRING = btnId == R.id.btnEnter ? ENTER_STRING : getIntent().getStringExtra(INTENT_EXTRA_STRING_TO_TYPE);
     }
 
     @Override
@@ -130,7 +140,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
                 break;
             case HidService.STATE_CONNECTED:
                 txtState.setText("Connected");
-                hidService.sendText(getIntent().getStringExtra(INTENT_EXTRA_STRING_TO_TYPE));
+                hidService.sendText(CURRENT_SNED_STRING);
                 break;
             case HidService.STATE_SENDING:
                 txtState.setText("Sending");

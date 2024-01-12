@@ -26,11 +26,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btnConnect"
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/type_entry" />
+            android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnPassword"
+                    android:layout_width="197dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/keyboard_password" />
+
+                <Button
+                    android:id="@+id/btnEnter"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/keyboard_enter" />
+        </GridLayout>
 
         <TextView
             android:id="@+id/txtState"

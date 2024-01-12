@@ -19,9 +19,33 @@
         android:onClick="onSelectAuthorizedDevices"
         android:text="@string/select_authorized_devices" />
 
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/etPasswordLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:passwordToggleEnabled="true">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/inputPassword"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/hint_password"-->
+<!--            android:inputType="textPassword" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="no"
+        android:focusedByDefault="false"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/btnSendTestString"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/send_test_string" />
+
+
 </LinearLayout>
