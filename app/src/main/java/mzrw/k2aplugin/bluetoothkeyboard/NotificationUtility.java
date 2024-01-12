@@ -1,5 +1,6 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -42,6 +43,7 @@ public class NotificationUtility {
      * Create a fullscreen intent notification to open the {@link KeyboardActivity} to send the given text.
      * @param text the given text to be sent
      */
+    @SuppressLint("MissingPermission")
     public void notifyTextAvailable(String text) {
         final Intent intent = new Intent(context, KeyboardActivity.class);
         intent.putExtra(KeyboardActivity.INTENT_EXTRA_STRING_TO_TYPE, text);
@@ -49,7 +51,7 @@ public class NotificationUtility {
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         final Notification notification = new Notification.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon_grey)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.getString(R.string.notification_entry_available))
                 .setFullScreenIntent(pendingIntent, true)
                 .setContentIntent(pendingIntent)
