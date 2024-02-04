@@ -1,21 +1,14 @@
-# Keepass2Android Plugin: K2ABluetoothKeyboard
+# 作为蓝牙锁屏解锁的一环使用
+![image](https://github.com/xiaoxinshiwo/K2ABluetoothKeyboard/assets/24218496/0e216777-f9b9-4305-9acb-5c4f34dbbaca)
 
-K2ABluetoothKeyboard is a plugin for the keepass2android application. It allows you to enter your passwords over bluetooth.
+# 界面展示
+![image](https://github.com/xiaoxinshiwo/K2ABluetoothKeyboard/assets/24218496/0e176965-6002-4025-9944-1a89764ca9d0)
 
-- No additional hardware required 
-- No root required
 
-## for developers
+## 使用
+1. 输入电脑密码
+2. 点击Enter按钮点亮屏幕（可以省略）
+3. 点击Password按钮自动输入密码
+4. 再次点击Enter按钮登录
 
-Useful resources:
-- [https://github.com/PhilippC/keepass2android](https://github.com/PhilippC/keepass2android)
-- [K2AUSBKeyboard Plugin](https://github.com/whs/K2AUSBKeyboard)
 
-### Build instructions
-
-``` bash
-git clone ${..this..repo..}
-git submodule update --init
-# make sure you have the android sdk installed
-./gradlew assembleDebug
-```
