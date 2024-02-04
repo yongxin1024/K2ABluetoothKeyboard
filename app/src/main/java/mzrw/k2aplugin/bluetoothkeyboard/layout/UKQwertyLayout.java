@@ -46,8 +46,8 @@ public class UKQwertyLayout implements Layout {
         keyMap.put((char)0x1C, new char[]{'y', 'Y', '\0'}); 	// Keyboard y and Y
         keyMap.put((char)0x1D, new char[]{'z', 'Z', '\0'}); 	// Keyboard z and Z
         keyMap.put((char)0x1E, new char[]{'1', '!', '\0'}); 	// Keyboard 1 and !
-        keyMap.put((char)0x1F, new char[]{'2', '"', '\0'}); 	// Keyboard 2 and @
-        keyMap.put((char)0x20, new char[]{'3', '£', '\0'}); 	// Keyboard 3 and #
+        keyMap.put((char)0x1F, new char[]{'2', '@', '\0'}); 	// Keyboard 2 and @
+        keyMap.put((char)0x20, new char[]{'3', '#', '\0'}); 	// Keyboard 3 and #
         keyMap.put((char)0x21, new char[]{'4', '$', '\0'}); 	// Keyboard 4 and $
         keyMap.put((char)0x22, new char[]{'5', '%', '\0'}); 	// Keyboard 5 and %
         keyMap.put((char)0x23, new char[]{'6', '^', '\0'}); 	// Keyboard 6 and ^
@@ -67,8 +67,8 @@ public class UKQwertyLayout implements Layout {
         keyMap.put((char)0x31, new char[]{'\0', '\0', '\0'}); 	// Keyboard \ and |
         keyMap.put((char)0x32, new char[]{'#', '~', '\0'}); 	// Keyboard Non-US # and ~
         keyMap.put((char)0x33, new char[]{';', ':', '\0'}); 	// Keyboard ; and :
-        keyMap.put((char)0x34, new char[]{'\'', '@', '\0'}); 	// Keyboard ‘ and “
-        keyMap.put((char)0x35, new char[]{'`', '¬', '¦'}); 	// Keyboard Grave Accent and Tilde
+        keyMap.put((char)0x34, new char[]{'\'', '|', '\0'}); 	// Keyboard ‘ and “
+        keyMap.put((char)0x35, new char[]{'`', '~', '¦'}); 	// Keyboard Grave Accent and Tilde
         keyMap.put((char)0x36, new char[]{',', '<', '\0'}); 	// Keyboard , and <
         keyMap.put((char)0x37, new char[]{'.', '>', '\0'}); 	// Keyboard . and >
         keyMap.put((char)0x38, new char[]{'/', '?', '\0'}); 	// Keyboard / and ?
