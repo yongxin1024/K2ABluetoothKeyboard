@@ -2,6 +2,7 @@ package mzrw.k2aplugin.bluetoothkeyboard;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -43,11 +44,13 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     private Button btnNoDevicesAuthorized;
     private TextView txtState;
 
+    protected SharedPreferences preferences;
+    protected final String PASSWORD_PREFERENCES_NAME = "PASSWORD_PREFERENCES_NAME";
+    protected final String PASSWORD_PREFERENCES_KEY = "PASSWORD";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_keyboard);
-
+        preferences = this.getSharedPreferences(PASSWORD_PREFERENCES_NAME, Context.MODE_PRIVATE);
         hidService = new HidService(getApplicationContext(), bluetoothAdapter);
         selectedEntriesPreferences = getPreferences(MODE_PRIVATE);
 
@@ -128,7 +131,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     }
 
     private void setSendString(int btnId) {
-        CURRENT_SNED_STRING = btnId == R.id.btnEnter ? ENTER_STRING : getIntent().getStringExtra(INTENT_EXTRA_STRING_TO_TYPE);
+        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY,"");
+        CURRENT_SNED_STRING = btnId == R.id.btnEnter ? ENTER_STRING : savedPasswd;
     }
 
     @Override
@@ -136,7 +140,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         switch (state) {
             case HidService.STATE_DISCONNECTED:
 //                finishAndRemoveTask();
-                // do nothing
+                txtState.setText("Done");
                 break;
             case HidService.STATE_CONNECTING:
                 txtState.setText("Connecting");

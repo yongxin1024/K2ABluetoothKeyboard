@@ -33,11 +33,46 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnSendTestString"
+    <TextView
+        android:id="@+id/device"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/send_test_string" />
+        android:ems="10"
+        android:text="@string/device" />
+
+    <Button
+        android:id="@+id/btnNoDevicesAuthorized"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_authorized_devices"
+        android:visibility="gone" />
+
+    <Spinner
+        android:id="@+id/deviceSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnPassword"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="@string/keyboard_password" />
+
+        <Button
+            android:id="@+id/btnEnter"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="@string/keyboard_enter" />
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/txtState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

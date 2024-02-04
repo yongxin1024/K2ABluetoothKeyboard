@@ -15,23 +15,18 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends KeyboardActivity {
 
     private EditText inputPassword;
 
-    private SharedPreferences preferences;
-    private final String PASSWORD_PREFERENCES_NAME = "PASSWORD_PREFERENCES_NAME";
-    private final String PASSWORD_PREFERENCES_KEY = "PASSWORD";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preferences = this.getSharedPreferences(PASSWORD_PREFERENCES_NAME, Context.MODE_PRIVATE);
         final NotificationUtility notificationUtility = new NotificationUtility(this);
         notificationUtility.registerNotificationChannel();
-
-        final Button btnSendTestString = findViewById(R.id.btnSendTestString);
+        super.onCreate(savedInstanceState);
         inputPassword = findViewById(R.id.inputPassword);
         inputPassword.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == IME_ACTION_SEARCH ||
@@ -47,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-        btnSendTestString.setOnClickListener((v) -> {
-            final Intent intent = new Intent(MainActivity.this, KeyboardActivity.class);
-            intent.putExtra(KeyboardActivity.INTENT_EXTRA_STRING_TO_TYPE, inputPassword.getText().toString());
-            startActivity(intent);
-        });
+
         initPasswordOnCreate();
     }
 
