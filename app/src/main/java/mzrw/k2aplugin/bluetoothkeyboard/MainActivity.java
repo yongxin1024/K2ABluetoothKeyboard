@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends KeyboardActivity {
 
-    private EditText inputPassword;
+
 
 
 
@@ -27,23 +27,6 @@ public class MainActivity extends KeyboardActivity {
         final NotificationUtility notificationUtility = new NotificationUtility(this);
         notificationUtility.registerNotificationChannel();
         super.onCreate(savedInstanceState);
-        inputPassword = findViewById(R.id.inputPassword);
-        inputPassword.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == IME_ACTION_SEARCH ||
-                    actionId == IME_ACTION_DONE ||
-                    event != null &&
-                            event.getAction() == KeyEvent.ACTION_DOWN &&
-                            event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                if (event == null || !event.isShiftPressed()) {
-                    // the user is done typing.
-                    preferences.edit().putString(PASSWORD_PREFERENCES_KEY, inputPassword.getText().toString()).apply();
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        initPasswordOnCreate();
     }
 
 
@@ -52,12 +35,6 @@ public class MainActivity extends KeyboardActivity {
         startActivity(intent);
     }
 
-    private void initPasswordOnCreate() {
-        String editorPasswd = inputPassword.getText().toString();
-        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY,"");
-        if(editorPasswd.isEmpty() && !savedPasswd.isEmpty()){
-            inputPassword.setText(savedPasswd);
-        }
-    }
+
 
 }

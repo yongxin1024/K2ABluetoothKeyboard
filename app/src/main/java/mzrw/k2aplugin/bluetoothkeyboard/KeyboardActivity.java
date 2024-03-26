@@ -1,5 +1,8 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -7,10 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -39,6 +44,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     private List<BluetoothDevice> devices;
 
     private Spinner deviceSpinner;
+
+    private EditText inputPassword;
     private Button btnPassword;
     private Button btnEnter;
     private Button btnNoDevicesAuthorized;
@@ -47,6 +54,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     protected SharedPreferences preferences;
     protected final String PASSWORD_PREFERENCES_NAME = "PASSWORD_PREFERENCES_NAME";
     protected final String PASSWORD_PREFERENCES_KEY = "PASSWORD";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +62,14 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         hidService = new HidService(getApplicationContext(), bluetoothAdapter);
         selectedEntriesPreferences = getPreferences(MODE_PRIVATE);
 
+        inputPassword = findViewById(R.id.inputPassword);
         deviceSpinner = findViewById(R.id.deviceSpinner);
         btnPassword = findViewById(R.id.btnPassword);
         btnEnter = findViewById(R.id.btnEnter);
         btnNoDevicesAuthorized = findViewById(R.id.btnNoDevicesAuthorized);
         txtState = findViewById(R.id.txtState);
 
+        initPasswordOnCreate();
         registerListeners();
     }
 
@@ -88,7 +98,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
         btnPassword.setOnClickListener(this::connectToDevice);
         btnEnter.setOnClickListener(this::connectToDevice);
@@ -119,7 +130,20 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         }
     }
 
+    private void initPasswordOnCreate() {
+        String editorPasswd = inputPassword.getText().toString();
+        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY,"");
+        if(editorPasswd.isEmpty() && !savedPasswd.isEmpty()){
+            inputPassword.setText(savedPasswd);
+        }
+    }
+
     public void connectToDevice(View v) {
+        String editorPasswd = inputPassword.getText().toString();
+        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY, "");
+        if (!editorPasswd.equals(savedPasswd)) {
+            preferences.edit().putString(PASSWORD_PREFERENCES_KEY, inputPassword.getText().toString()).apply();
+        }
         setSendString(v.getId());
         final BluetoothDevice device = bluetoothAdapter.getRemoteDevice(selectedDevice);
         Log.i(TAG, "connecting to " + device.getName());
@@ -131,7 +155,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     }
 
     private void setSendString(int btnId) {
-        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY,"");
+        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY, "");
         CURRENT_SNED_STRING = btnId == R.id.btnEnter ? ENTER_STRING : savedPasswd;
     }
 
