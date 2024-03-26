@@ -1,8 +1,5 @@
 package mzrw.k2aplugin.bluetoothkeyboard;
 
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
-
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -10,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -132,8 +128,8 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
 
     private void initPasswordOnCreate() {
         String editorPasswd = inputPassword.getText().toString();
-        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY,"");
-        if(editorPasswd.isEmpty() && !savedPasswd.isEmpty()){
+        String savedPasswd = preferences.getString(PASSWORD_PREFERENCES_KEY, "");
+        if (editorPasswd.isEmpty() && !savedPasswd.isEmpty()) {
             inputPassword.setText(savedPasswd);
         }
     }
