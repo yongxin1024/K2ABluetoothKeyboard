@@ -38,14 +38,11 @@ public class AuthorizedDevicesActivity extends AbstractBluetoothActivity {
         recyclerViewAuthorizedDevices.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
         authorizedDevicesManager = new AuthorizedDevicesManager(this);
-
-        checkBluetoothEnabled();
+        super.checkBluetoothEnabled();
     }
 
     @Override
     protected void onBluetoothEnabled() {
-        super.onBluetoothEnabled();
-
         setAuthorizedDevicesAdapter();
     }
 

@@ -14,6 +14,7 @@ public class MainActivity extends KeyboardActivity {
         final NotificationUtility notificationUtility = new NotificationUtility(this);
         notificationUtility.registerNotificationChannel();
         super.onCreate(savedInstanceState);
+        super.checkBluetoothPermission();
     }
 
 
