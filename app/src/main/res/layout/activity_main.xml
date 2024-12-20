@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,6 +19,63 @@
         android:layout_height="wrap_content"
         android:onClick="onSelectAuthorizedDevices"
         android:text="@string/select_authorized_devices" />
+
+    <!-- Collapsible Section Start -->
+    <LinearLayout
+        android:id="@+id/collapsibleSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/genPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/generatedPassword"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnGenPassword"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text="@string/generate_password"
+                android:drawableEnd="@drawable/change_circle_24px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text="@string/accept_password"
+                android:drawableEnd="@drawable/check_24px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <!-- Toggle Button -->
+    <!-- Collapsible Section End -->
+
+    <Button
+        android:id="@+id/btnToggleCollapsible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="@string/toggle_password_section" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etPasswordLayout"
@@ -52,27 +110,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <GridLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 左侧按钮 -->
         <Button
             android:id="@+id/btnPassword"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="@string/keyboard_password" />
+            android:drawableEnd="@drawable/key"
+            android:text="@string/keyboard_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- 右侧按钮 -->
         <Button
             android:id="@+id/btnEnter"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="@string/keyboard_enter" />
-    </GridLayout>
+            android:drawableEnd="@drawable/send_24px"
+            android:text="@string/keyboard_enter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <TextView
         android:id="@+id/txtState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
 </LinearLayout>

@@ -15,6 +15,9 @@
     <string name="keyboard_layout">Keyboard Layout</string>
     <string name="no_authorized_devices">No devices authorized => Select some</string>
     <string name="keyboard_password">password</string>
+    <string name="generate_password">generate</string>
+    <string name="accept_password">accept</string>
+    <string name="toggle_password_section">Generate Password</string>
     <string name="keyboard_enter">Enter</string>
 
     <!-- AUTHORIZED DEVICES ACTIVITY -->

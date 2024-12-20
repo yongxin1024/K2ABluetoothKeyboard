@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import java.util.stream.IntStream;
 import mzrw.k2aplugin.bluetoothkeyboard.core.AuthorizedDevicesManager;
 import mzrw.k2aplugin.bluetoothkeyboard.core.HidService;
 import mzrw.k2aplugin.bluetoothkeyboard.layout.KeyboardLayoutFactory;
+import mzrw.k2aplugin.bluetoothkeyboard.util.PasswordGenerator;
 
 @SuppressLint("MissingPermission")
 public class KeyboardActivity extends AbstractBluetoothActivity implements HidService.StateChangeListener {
@@ -44,6 +46,11 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     private EditText inputPassword;
     private Button btnPassword;
     private Button btnEnter;
+
+    private EditText generatedPassword;
+    private Button btnGenPassword;
+    private Button btnAccept;
+    private Button btnToggleCollapsible;
     private Button btnNoDevicesAuthorized;
     private TextView txtState;
 
@@ -64,7 +71,10 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         btnEnter = findViewById(R.id.btnEnter);
         btnNoDevicesAuthorized = findViewById(R.id.btnNoDevicesAuthorized);
         txtState = findViewById(R.id.txtState);
-
+        generatedPassword = findViewById(R.id.generatedPassword);
+        btnGenPassword = findViewById(R.id.btnGenPassword);
+        btnAccept = findViewById(R.id.btnAccept);
+        btnToggleCollapsible = findViewById(R.id.btnToggleCollapsible);
         initPasswordOnCreate();
         registerListeners();
     }
@@ -99,8 +109,28 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         });
         btnPassword.setOnClickListener(this::connectToDevice);
         btnEnter.setOnClickListener(this::connectToDevice);
+        btnGenPassword.setOnClickListener(this::generatePassword);
+        btnAccept.setOnClickListener(this::acceptPassword);
+        LinearLayout collapsibleSection = findViewById(R.id.collapsibleSection);
+        btnToggleCollapsible.setOnClickListener(v -> {
+            if (collapsibleSection.getVisibility() == View.VISIBLE) {
+                collapsibleSection.setVisibility(View.GONE);
+            } else {
+                collapsibleSection.setVisibility(View.VISIBLE);
+            }
+        });
         btnNoDevicesAuthorized.setOnClickListener(v -> startActivity(new Intent(KeyboardActivity.this, AuthorizedDevicesActivity.class)));
         hidService.setOnStateChangeListener(this);
+    }
+
+    private void acceptPassword(View view) {
+        inputPassword.setText(generatedPassword.getText().toString());
+        preferences.edit().putString(PASSWORD_PREFERENCES_KEY, generatedPassword.getText().toString()).apply();
+    }
+
+    private void generatePassword(View view) {
+        String newPassword = PasswordGenerator.generatePassword();
+        generatedPassword.setText(newPassword);
     }
 
     @Override
