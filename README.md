@@ -2,7 +2,8 @@
 ![image](https://github.com/xiaoxinshiwo/K2ABluetoothKeyboard/assets/24218496/0e216777-f9b9-4305-9acb-5c4f34dbbaca)
 
 # 界面展示
-![image](https://github.com/xiaoxinshiwo/K2ABluetoothKeyboard/assets/24218496/0e176965-6002-4025-9944-1a89764ca9d0)
+![99645f73593ef0e9e101a02f34e3e67](https://github.com/user-attachments/assets/c75632e0-4a75-4f24-ab6f-4c4ef740d53e)
+
 
 
 ## 使用
