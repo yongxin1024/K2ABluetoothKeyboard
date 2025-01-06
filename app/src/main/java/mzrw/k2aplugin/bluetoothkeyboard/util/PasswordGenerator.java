@@ -8,7 +8,19 @@ public class PasswordGenerator {
     private static final String[] WORD_POOL = {
             "Adventure", "Bright", "Courage", "Dream", "Energy", "Freedom", "Harmony",
             "Inspire", "Journey", "Knowledge", "Liberty", "Momentum", "Nature", "Optimism",
-            "Passion", "Quality", "Resolve", "Spirit", "Treasure", "Unity", "Victory", "Wisdom"
+            "Passion", "Quality", "Resolve", "Spirit", "Treasure", "Unity", "Victory", "Wisdom",
+            "Angelfish", "Barnacle", "Clam", "Cod", "Coral", "Crab", "Dolphin", "Eel",
+            "Flounder", "Grouper", "Guppy", "Haddock", "Herring", "Jellyfish", "Krill",
+            "Lobster", "Manatee", "Manta", "Marlin", "Minnow", "Mullet", "Octopus",
+            "Oyster", "Perch", "Piranha", "Prawn", "Ray", "Salmon", "Scallop", "Seal",
+            "Shark", "Shrimp", "Snapper", "Squid", "Stingray", "Swordfish", "Trout",
+            "Tuna", "Urchin", "Whale", "Wrasse", "Antelope", "Badger", "Beaver", "Bison",
+            "Buffalo", "Camel", "Cheetah", "Cougar",
+            "Coyote", "Deer", "Donkey", "Elephant", "Ferret", "Fox", "Gazelle", "Giraffe",
+            "Hedgehog", "Hippopotamus", "Horse", "Jaguar", "Kangaroo", "Koala", "Leopard",
+            "Lion", "Lynx", "Mongoose", "Monkey", "Moose", "Ocelot", "Opossum", "Otter",
+            "Panther", "Puma", "Rabbit", "Raccoon", "Rhino", "Sheep", "Sloth", "Squirrel",
+            "Tiger", "Vole", "Wolf", "Yak", "Zebra"
     };
 
     // 特殊字符池
