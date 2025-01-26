@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +61,7 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
     protected SharedPreferences preferences;
     protected final String PASSWORD_PREFERENCES_NAME = "PASSWORD_PREFERENCES_NAME";
     protected final String PASSWORD_PREFERENCES_KEY = "PASSWORD";
+    private static final int REQUEST_BLUETOOTH_PERMISSIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +84,22 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
         registerListeners();
     }
 
+    private void checkBluetoothPermissions() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_SCAN},
+                    REQUEST_BLUETOOTH_PERMISSIONS
+            );
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-
+        checkBluetoothPermissions();
         updateSelectionFromPreferences();
         checkBluetoothEnabled();
     }
@@ -135,16 +152,23 @@ public class KeyboardActivity extends AbstractBluetoothActivity implements HidSe
 
     @Override
     protected void onBluetoothEnabled() {
-        devices = new AuthorizedDevicesManager(this).filterAuthorizedDevices(bluetoothAdapter.getBondedDevices());
-        btnNoDevicesAuthorized.setVisibility(devices.size() > 0 ? View.GONE : View.VISIBLE);
-        deviceSpinner.setVisibility(devices.size() > 0 ? View.VISIBLE : View.GONE);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
+                == PackageManager.PERMISSION_GRANTED) {
 
-        final List<String> names = devices.stream().map(BluetoothDevice::getName).collect(Collectors.toList());
-        final SpinnerAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, names);
-        deviceSpinner.setAdapter(adapter);
+            devices = new AuthorizedDevicesManager(this).filterAuthorizedDevices(bluetoothAdapter.getBondedDevices());
+            btnNoDevicesAuthorized.setVisibility(devices.size() > 0 ? View.GONE : View.VISIBLE);
+            deviceSpinner.setVisibility(devices.size() > 0 ? View.VISIBLE : View.GONE);
 
-        updateSelectionFromPreferences();
+            List<String> names = devices.stream().map(BluetoothDevice::getName).collect(Collectors.toList());
+            SpinnerAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, names);
+            deviceSpinner.setAdapter(adapter);
+
+            updateSelectionFromPreferences();
+        } else {
+            Log.e(TAG, "Missing BLUETOOTH_CONNECT permission");
+        }
     }
+
 
     private void updateSelectionFromPreferences() {
         if (devices != null) {

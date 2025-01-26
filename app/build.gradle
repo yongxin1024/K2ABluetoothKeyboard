@@ -23,6 +23,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    namespace 'mzrw.k2aplugin.bluetoothkeyboard'
 
 }
 
